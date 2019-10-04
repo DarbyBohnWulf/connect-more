@@ -1,8 +1,11 @@
 # Connect More
 #### _A place to connect and play with friends_
 
-
-![landing screen](/images/assets/landingScreen.jpg)
+ Connect| Chat | Play
+ :-:|:-:|:-:
+![landing screen](/images/assets/landingScreen.jpg) | ![activity select screen](images/assets/chooseActivity.jpg) | ![playing connect 4](images/assets/playingC4.jpg)
+![decide who goes first](images/assets/turnOrderAsk.jpg) | ![or let us decide for you](images/assets/coinToss.jpg) | ![playing shell game](images/assets/playingShells.jpg)
+ |![This is what it looks like when you win!](images/assets/youWin.jpg)|
 
 **Who am I?** I'm Mark!
 
