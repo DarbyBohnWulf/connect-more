@@ -15,15 +15,20 @@ main {
     justify-content: space-evenly;
 }
 
-.play-area {
+#play-area {
     display: flex;
     flex-direction: column;
+    width: 90%;
 }
 
-.player-names {
+#play-area form {
+    align-self: center;
+}
+
+#player-names {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .player-name {
