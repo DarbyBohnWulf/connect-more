@@ -23,6 +23,7 @@ const app = {
     choices: [
         'Connection Game', 'Self Destruct(!)'
     ],
+    game: undefined,
     setPlayerName() {
         const newPlayer = new Player(app.nameInput.value);
         console.log(newPlayer);
@@ -84,7 +85,7 @@ app.playArea.addEventListener('click', e => {
     switch (e.target.getAttribute('id')) {
         case 'connection-game':
             console.log('jacked in');
-            const game = new ConnectionGame(app.players[0],app.players[1]);
+            app.game = new ConnectionGame(app.players[0],app.players[1]);
             break;
         default:
             console.log('nevermind');
