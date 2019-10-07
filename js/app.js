@@ -20,13 +20,16 @@ const app = {
     nameSpace: document.querySelector('#player-names'),
     mainArea: document.querySelector('main'),
     canvas: undefined,
+    choices: [
+        'Connection Game', 'Self Destruct(!)'
+    ],
     setPlayerName() {
         const newPlayer = new Player(app.nameInput.value);
         console.log(newPlayer);
         this.players.push(newPlayer);
         // if 2 players have been named
         if (this.players.length === 2) {
-            this.transitionToPlaying();
+            this.transitionToChoosing();
         // else, set page up to get P2's name
         } else {
             this.nameInput.value = '';
@@ -42,23 +45,48 @@ const app = {
         this.nameSpace.append(nameHeader);
     },
     // sets DOM up for an activity
-    transitionToPlaying() {
+    transitionToChoosing() {
         this.nameForm.remove();
         // triggers the transitions on main
         this.mainArea.classList.add('playing');
-        window.setTimeout(this.createCanvas.bind(app), 3000);
+        // window.setTimeout(this.createCanvas.bind(app), 3000);
+        this.showChoices();
     },
     createCanvas() {
+        // clear the space where the canvas will be
+        while (this.playArea.lastChild) {
+            this.playArea.removeChild(this.playArea.lastChild);
+        }
         this.canvas = document.createElement('canvas');
         console.log('canvas made: ' + this.canvas);
         this.canvas.setAttribute('width', (this.mainArea.scrollWidth * 0.95) + 'px');
         this.canvas.setAttribute('height', (this.mainArea.scrollWidth * 0.95) + 'px');
         console.log('canvas.attributes' + this.canvas.attributes);
         this.playArea.append(this.canvas);
+    },
+    showChoices() {
+        for (let i = 0; i < this.choices.length; i++) {
+            const option = document.createElement('button');
+            option.textContent = this.choices[i];
+            option.classList.add('game-choice');
+            option.setAttribute('id',this.choices[i].split(' ').join('-').toLowerCase());
+            this.playArea.appendChild(option);
+        }
     }
 }
 
-document.querySelector('form').addEventListener('submit', e => {
+app.nameForm.addEventListener('submit', e => {
     e.preventDefault();
     app.setPlayerName();
+})
+
+app.playArea.addEventListener('click', e => {
+    switch (e.target.getAttribute('id')) {
+        case 'connection-game':
+            console.log('jacked in');
+            const game = new ConnectionGame(app.players[0],app.players[1]);
+            break;
+        default:
+            console.log('nevermind');
+    }
 })
