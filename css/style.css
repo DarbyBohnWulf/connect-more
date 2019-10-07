@@ -25,7 +25,7 @@ main {
 #play-area {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 95%;
 }
 
 #play-area form {

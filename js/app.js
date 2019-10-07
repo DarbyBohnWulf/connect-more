@@ -10,6 +10,7 @@ const app = {
     playArea: document.querySelector('#play-area'),
     nameSpace: document.querySelector('#player-names'),
     mainArea: document.querySelector('main'),
+    canvas: undefined,
     setPlayerName() {
         const newPlayer = new Player(app.nameInput.value);
         console.log(newPlayer);
@@ -31,6 +32,15 @@ const app = {
     transitionToPlaying() {
         this.nameForm.remove();
         this.mainArea.classList.add('playing');
+        window.setTimeout(this.createCanvas.bind(app), 2600);
+    },
+    createCanvas() {
+        const canvas = document.createElement('canvas');
+        console.log('canvas made: ' + canvas);
+        canvas.setAttribute('width', '100%');
+        console.log('canvas.attributes' + canvas.attributes);
+        this.playArea.append(canvas);
+        canvas.setAttribute('height', canvas.scrollWidth + 'px');
     }
 }
 
