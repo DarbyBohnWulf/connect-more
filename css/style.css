@@ -8,11 +8,18 @@ body {
 
 main {
     background-color: #b3a024;
-    width: 60vw;
+    width: 55vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    /*  makes for a smooth transition, with both happening at once */
+    transition: width 2s ease-out .5s, transform 2s ease-out .5s;
+}
+
+.playing {
+    width: 65vw;
+    transform: translateX(-16vw);
 }
 
 #play-area {
