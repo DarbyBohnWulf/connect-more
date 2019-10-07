@@ -14,3 +14,18 @@ main {
     align-items: center;
     justify-content: space-evenly;
 }
+
+.play-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-names {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.player-name {
+    display: inline-flex;
+}
