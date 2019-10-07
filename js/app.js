@@ -1,8 +1,17 @@
-class Player {
-    constructor(name) {
-        this.name = name;
-    }
-}
+/* This file is part of Connect More.
+
+Connect More is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Connect More is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Connect More.  If not, see <https://www.gnu.org/licenses/>. */
 const app = {
     players: [],
     nameInput: document.querySelector('#name'),
@@ -15,32 +24,37 @@ const app = {
         const newPlayer = new Player(app.nameInput.value);
         console.log(newPlayer);
         this.players.push(newPlayer);
-        if (this.players.length >= 2) {
+        // if 2 players have been named
+        if (this.players.length === 2) {
             this.transitionToPlaying();
+        // else, set page up to get P2's name
         } else {
             this.nameInput.value = '';
             this.nameInput.setAttribute('placeholder', 'Player 2?');
         }
         this.showPlayerName(newPlayer);
     },
+    // adds player names to the DOM
     showPlayerName(player) {
         const nameHeader = document.createElement('h4');
         nameHeader.className = 'player-name';
         nameHeader.textContent = player.name;
         this.nameSpace.append(nameHeader);
     },
+    // sets DOM up for an activity
     transitionToPlaying() {
         this.nameForm.remove();
+        // triggers the transitions on main
         this.mainArea.classList.add('playing');
-        window.setTimeout(this.createCanvas.bind(app), 2600);
+        window.setTimeout(this.createCanvas.bind(app), 3000);
     },
     createCanvas() {
-        const canvas = document.createElement('canvas');
-        console.log('canvas made: ' + canvas);
-        canvas.setAttribute('width', '100%');
-        console.log('canvas.attributes' + canvas.attributes);
-        this.playArea.append(canvas);
-        canvas.setAttribute('height', canvas.scrollWidth + 'px');
+        this.canvas = document.createElement('canvas');
+        console.log('canvas made: ' + this.canvas);
+        this.canvas.setAttribute('width', (this.mainArea.scrollWidth * 0.95) + 'px');
+        this.canvas.setAttribute('height', (this.mainArea.scrollWidth * 0.95) + 'px');
+        console.log('canvas.attributes' + this.canvas.attributes);
+        this.playArea.append(this.canvas);
     }
 }
 
