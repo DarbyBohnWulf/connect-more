@@ -16,5 +16,31 @@ class ConnectionGame {
     constructor(p1,p2) {
         this.player1 = p1;
         this.player2 = p2;
+        this.board = undefined;
+    }
+    createGameBoard(playAreaWidth) {
+        this.board = document.createElement('section');
+        this.board.setAttribute('id','connect-game');
+        this.board.setAttribute('width',playAreaWidth)
+        this.board.setAttribute('height', playAreaWidth);
+        console.log(this.board)
+        // this.populateBoard();
+        return this.board
+    }
+    populateBoard() {
+        for (let c = 1; c <= 7; c++) {
+            for (let r = 1; r <= 6; r++) {
+                const div = document.createElement('div');
+                console.log([this.board])
+                console.log(this.board.offsetWidth)
+                console.log(typeof this.board.width)
+                div.setAttribute('style', `height: ${this.board.offsetWidth / 8}px;\
+                width: ${this.board.offsetWidth / 8}px; grid-column: ${c}; grid-row: ${r};\
+                background-color: #b3a024;`);
+                div.setAttribute('class','connect-slot');
+                div.setAttribute('id',`slot-${c}-${r}`);
+                this.board.appendChild(div);
+            }
+        }
     }
 }

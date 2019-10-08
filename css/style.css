@@ -41,3 +41,18 @@ main {
 .player-name {
     display: inline-flex;
 }
+
+.game-choice {
+    width: 100%;
+    height: 10em;
+    border: none;
+}
+
+#connect-game {
+    display: grid;
+    background-color: #1723c3;
+}
+
+.connect-slot {
+    border-radius: 50%;
+}

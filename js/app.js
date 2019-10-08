@@ -20,6 +20,9 @@ const app = {
     nameSpace: document.querySelector('#player-names'),
     mainArea: document.querySelector('main'),
     board: undefined,
+    choices: [
+        'Connection Game', 'Self Destruct(!)'
+    ],
     game: undefined,
     setPlayerName() {
         const newPlayer = new Player(app.nameInput.value);
@@ -27,7 +30,7 @@ const app = {
         this.players.push(newPlayer);
         // if 2 players have been named
         if (this.players.length === 2) {
-            this.transitionToPlaying();
+            this.transitionToChoosing();
         // else, set page up to get P2's name
         } else {
             this.nameInput.value = '';
@@ -43,19 +46,48 @@ const app = {
         this.nameSpace.append(nameHeader);
     },
     // sets DOM up for an activity
-    transitionToPlaying() {
+    transitionToChoosing() {
         this.nameForm.remove();
         // triggers the transitions on main
         this.mainArea.classList.add('playing');
-        window.setTimeout(this.createCanvas.bind(app), 3000);
+        // window.setTimeout(this.createCanvas.bind(app), 3000);
+        this.showChoices();
     },
     startConnectGame() {
+        this.clearPlayArea();
         this.game = new ConnectionGame(this.players[0],this.players[1]);
         this.board = this.game.createGameBoard(this.playArea.scrollWidth);
+        this.playArea.appendChild(this.board);
+        this.game.populateBoard();
+    },
+    showChoices() {
+        for (let i = 0; i < this.choices.length; i++) {
+            const option = document.createElement('button');
+            option.textContent = this.choices[i];
+            option.classList.add('game-choice');
+            option.setAttribute('id',this.choices[i].split(' ').join('-').toLowerCase());
+            this.playArea.appendChild(option);
+        }
+    },
+    clearPlayArea() {
+        while (this.playArea.lastChild) {
+            this.playArea.removeChild(this.playArea.lastChild);
+        }
     }
 }
 
-document.querySelector('form').addEventListener('submit', e => {
+app.nameForm.addEventListener('submit', e => {
     e.preventDefault();
     app.setPlayerName();
+})
+
+app.playArea.addEventListener('click', e => {
+    switch (e.target.getAttribute('id')) {
+        case 'connection-game':
+            console.log('jacked in');
+            app.startConnectGame();
+            break
+        default:
+            console.log('nevermind');
+    }
 })
