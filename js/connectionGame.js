@@ -17,12 +17,15 @@ class ConnectionGame {
         this.player1 = p1;
         this.player2 = p2;
         this.board = undefined;
+        this.turn = 1;
+        this.boardMatrix = [];
     }
     createGameBoard(playAreaWidth) {
         this.board = document.createElement('section');
         this.board.setAttribute('id','connect-game');
         this.board.setAttribute('width',playAreaWidth)
         this.board.setAttribute('height', playAreaWidth);
+        this.board.addEventListener('click', this.makeMove);
         console.log(this.board)
         // this.populateBoard();
         return this.board
@@ -31,16 +34,30 @@ class ConnectionGame {
         for (let c = 1; c <= 7; c++) {
             for (let r = 1; r <= 6; r++) {
                 const div = document.createElement('div');
-                console.log([this.board])
-                console.log(this.board.offsetWidth)
-                console.log(typeof this.board.width)
                 div.setAttribute('style', `height: ${this.board.offsetWidth / 8}px;\
                 width: ${this.board.offsetWidth / 8}px; grid-column: ${c}; grid-row: ${r};\
                 background-color: #b3a024;`);
                 div.setAttribute('class','connect-slot');
+
                 div.setAttribute('id',`slot-${c}-${r}`);
                 this.board.appendChild(div);
             }
         }
     }
+    makeMove(event) {
+        if (event.target.tagName === 'DIV') {
+            if (app.game.turn % 2 !== 0) {
+                event.target.style.backgroundColor = '#f00f';
+            } else {
+                event.target.style.backgroundColor = '#0f0f';
+            }
+            console.log(event.target);
+            // this.fall(event.target);
+            app.game.turn++
+        }
+    
+    }
+    // fall(slottedDisk) {
+    //     if (slottedDisk.) 
+    // }
 }
