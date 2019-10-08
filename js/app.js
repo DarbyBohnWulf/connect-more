@@ -19,7 +19,8 @@ const app = {
     playArea: document.querySelector('#play-area'),
     nameSpace: document.querySelector('#player-names'),
     mainArea: document.querySelector('main'),
-    canvas: undefined,
+    board: undefined,
+    game: undefined,
     setPlayerName() {
         const newPlayer = new Player(app.nameInput.value);
         console.log(newPlayer);
@@ -48,13 +49,9 @@ const app = {
         this.mainArea.classList.add('playing');
         window.setTimeout(this.createCanvas.bind(app), 3000);
     },
-    createCanvas() {
-        this.canvas = document.createElement('canvas');
-        console.log('canvas made: ' + this.canvas);
-        this.canvas.setAttribute('width', (this.mainArea.scrollWidth * 0.95) + 'px');
-        this.canvas.setAttribute('height', (this.mainArea.scrollWidth * 0.95) + 'px');
-        console.log('canvas.attributes' + this.canvas.attributes);
-        this.playArea.append(this.canvas);
+    startConnectGame() {
+        this.game = new ConnectionGame(this.players[0],this.players[1]);
+        this.board = this.game.createGameBoard(this.playArea.scrollWidth);
     }
 }
 
