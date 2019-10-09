@@ -37,19 +37,27 @@ class ConnectionGame {
         return this.board
     }
     populateBoard() {
+        // these are used to keep track of the diagonal lanes
+        let diagU = 0;
+        let diagD = 6;
+        // for every column
         for (let c = 1; c <= 7; c++) {
-            const row = [];
+            // create a new array to hold the slots
+            const slots = [];
+            // make an identifiable div for every space in the column
             for (let r = 1; r <= 6; r++) {
                 const div = document.createElement('div');
                 div.setAttribute('style', `height: ${this.board.offsetWidth / 8}px;\
                 width: ${this.board.offsetWidth / 8}px; grid-column: ${c}; grid-row: ${r};\
                 background-color: #b3a024;`);
-                div.setAttribute('class',`connect-slot row${r} col${c}` );
+                div.setAttribute('class',`connect-slot col${c} row${r} diagU${diagU + r} diagD${diagD + r}` );
                 div.setAttribute('id',`slot-${c}-${r}`);
                 this.board.appendChild(div);
-                row.push(div);
+                slots.push(div);
             }
-            this.boardMatrix.push(row);
+            this.boardMatrix.push(slots);
+            diagU++
+            diagD--
         }
     }
     makeMove(div) {
@@ -125,4 +133,8 @@ class ConnectionGame {
             }
         }
     }
+    // checkUpRightDiagonal(coords) {
+    //     const lane = [];
+    //     for (let i = coords)
+    // }
 }
