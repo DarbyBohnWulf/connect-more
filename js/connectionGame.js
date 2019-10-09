@@ -94,12 +94,10 @@ class ConnectionGame {
     checkLastMove() {
         // don't check if no player has 4 disks on the board
         if (this.turn < 7) return false
-        console.log('checking last move');
         if (this.checkRow(this.lastMove.y)) return true
         if (this.checkColumn(this.lastMove.x)) return true
-        // turn 11 is the earliest that a player (p1) can complete a diagonal
-        if (this.turn > 10) {
-            console.log('checking diagonals');
+        // turn 10 is the earliest that a player can complete a diagonal
+        if (this.turn > 9) {
             if (this.checkUpRightDiagonal()) return true
             if (this.checkDownRightDiagonal()) return true
         } 
@@ -149,10 +147,10 @@ class ConnectionGame {
         }   
     }
     checkDownRightDiagonal() {
-        const lane = document.querySelectorAll(this.lastMove.d);
+        const lane = document.querySelectorAll(`.${this.lastMove.d}`);
         let chainLength = 0;
         if (lane.length < 4) return false
-        for (let i = 0; i < lane.length -1; i++) {
+        for (let i = 0; i < lane.length - 1; i++) {
             if (this.checkColorMatch(lane[i],lane[i+1])) {
                 chainLength++;
                 if (chainLength === 3) return true

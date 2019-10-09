@@ -84,7 +84,6 @@ app.nameForm.addEventListener('submit', e => {
 app.playArea.addEventListener('click', e => {
     switch (e.target.getAttribute('id')) {
         case 'connection-game':
-            console.log('jacked in');
             app.startConnectGame();
             break
         default:
