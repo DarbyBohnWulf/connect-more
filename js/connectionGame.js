@@ -19,8 +19,7 @@ class ConnectionGame {
         this.board = undefined;
         this.turn = 1;
         this.boardMatrix = [];
-        this.lastMove = { x: 0, y: 0 };
-
+        this.lastMove = { x: 0, y: 0, u: 0, d: 0 };
     }
     createGameBoard(playAreaWidth) {
         this.board = document.createElement('section');
@@ -32,7 +31,6 @@ class ConnectionGame {
                 this.makeMove(e.target);
             }
         });
-        console.log(this.board)
         // this.populateBoard();
         return this.board
     }
@@ -70,18 +68,15 @@ class ConnectionGame {
             } else {
                 div.style.backgroundColor = '#0f0f';
             }
-            console.log(div);
             app.game.fall(div.id);
             if (this.checkLastMove()) console.log(`${[this.player2,this.player1][this.turn % 2].name} wins!`);;
             app.game.turn++;
         }
-    
     }
     fall(slottedDiskId) {
         // get numbers for row and column that will be equivalent in this.boardMatrix
         const row = parseInt(slottedDiskId[7]) - 1;
         const col = parseInt(slottedDiskId[5]) - 1;
-        console.log(col,row);
         // look at the color of the slot below the clicked slot
         if (row < 5 && this.boardMatrix[col][row + 1].style.backgroundColor === 'rgb(179, 160, 36)') {
             this.boardMatrix[col][row].style.backgroundColor = 'rgb(179, 160, 36)';
@@ -91,7 +86,10 @@ class ConnectionGame {
         }
         this.lastMove.x = col;
         this.lastMove.y = row;
-
+        // readjust after adapting them to indexes earlier
+        // trust me, this algorithm gives you the right diagU
+        this.lastMove.u = col + row + 1;
+        this.lastMove.d = this.boardMatrix[col][row].classList[4];
     }
     checkLastMove() {
         // don't check if no player has 4 disks on the board
@@ -99,9 +97,14 @@ class ConnectionGame {
         console.log('checking last move');
         if (this.checkRow(this.lastMove.y)) return true
         if (this.checkColumn(this.lastMove.x)) return true
+        // turn 11 is the earliest that a player (p1) can complete a diagonal
+        if (this.turn > 10) {
+            console.log('checking diagonals');
+            if (this.checkUpRightDiagonal()) return true
+            if (this.checkDownRightDiagonal()) return true
+        } 
     }
     checkColorMatch(elem1,elem2) {
-        console.log('checking color match');
         if (elem1.style.backgroundColor === elem2.style.backgroundColor && elem1.style.backgroundColor !== 'rgb(179, 160, 36)') return true
     }
     checkRow(rowNum) {
@@ -109,7 +112,6 @@ class ConnectionGame {
         for (let i = 0; i < 6; i++) {
             if (this.checkColorMatch(this.boardMatrix[i][rowNum],this.boardMatrix[i+1][rowNum])) {
                 chainLength++;
-                console.log(chainLength,i);
                 // as we're checking if the next item matches, we only have to get up to 3 links e.g (.-.-.-.)
                 if (chainLength === 3) return true
             } else {
@@ -120,21 +122,44 @@ class ConnectionGame {
         }
     }
     checkColumn(colNum) {
-        let chainLength = 0
+        let chainLength = 0;
         for (let i = 0; i < 5; i++) {
             if (this.checkColorMatch(this.boardMatrix[colNum][i],this.boardMatrix[colNum][i+1])) {
                 chainLength++;
-                console.log(chainLength,i);
                 // as we're checking if the next item matches, we only have to get up to 3 links
                 if (chainLength === 3) return true
             } else {
-                if (i > 1)
+                if (i > 1) return false
                 chainLength = 0;
             }
         }
     }
-    // checkUpRightDiagonal(coords) {
-    //     const lane = [];
-    //     for (let i = coords)
-    // }
+    checkUpRightDiagonal() {
+        const lane = document.querySelectorAll(`.diagU${this.lastMove.u}`);
+        let chainLength = 0;
+        if (lane.length < 4) return false
+        for (let i = 0; i < lane.length - 1; i++) {
+            if (this.checkColorMatch(lane[i],lane[i+1])) {
+                chainLength++;
+                if (chainLength === 3) return true
+            } else {
+                if (i > lane.length - 4) return false
+                chainLength = 0;
+            }
+        }   
+    }
+    checkDownRightDiagonal() {
+        const lane = document.querySelectorAll(this.lastMove.d);
+        let chainLength = 0;
+        if (lane.length < 4) return false
+        for (let i = 0; i < lane.length -1; i++) {
+            if (this.checkColorMatch(lane[i],lane[i+1])) {
+                chainLength++;
+                if (chainLength === 3) return true
+            } else {
+                if (i > lane.length - 4) return false
+                chainLength = 0;
+            }
+        }
+    }
 }
