@@ -69,7 +69,13 @@ class ConnectionGame {
                 div.style.backgroundColor = '#0f0f';
             }
             app.game.fall(div.id);
-            if (this.checkLastMove()) console.log(`${[this.player2,this.player1][this.turn % 2].name} wins!`);;
+            if (this.checkLastMove()) {
+                const winBanner = document.querySelector('.win-banner');
+                const winnerColor = app.game.turn % 2 ? '#f33f' : '#3f3f';
+                winBanner.style.color = winnerColor;
+                winBanner.textContent = (`${[this.player2,this.player1][this.turn % 2].name} wins!`);
+                winBanner.classList.add('won');
+            }
             app.game.turn++;
         }
     }

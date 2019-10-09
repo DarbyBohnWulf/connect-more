@@ -13,8 +13,9 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    overflow: hidden;
     /*  makes for a smooth transition, with both happening at once */
-    transition: width 2s ease-out .5s, transform 2s ease-out .5s;
+    transition: width 1s ease-out .5s, transform 1s ease-out .5s;
 }
 
 .playing {
@@ -56,4 +57,21 @@ main {
 
 .connect-slot {
     border-radius: 50%;
+}
+
+.win-banner {
+    /* font-size: 2em; */
+    text-shadow: #434ab3;
+    position: absolute;
+    opacity: 0;
+    top: 120%;
+    z-index: -1;
+    transition: opacity 1s ease-in .5s, top 1.5s ease-out .5s, z-index .1s, font-size 2s ease-in-out .5s;
+}
+
+.won {
+    opacity: 1;
+    z-index: 2;
+    top: 30%;
+    font-size: 2.6em;
 }
