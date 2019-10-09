@@ -88,6 +88,5 @@ app.playArea.addEventListener('click', e => {
             app.startConnectGame();
             break
         default:
-            console.log('nevermind');
     }
 })
