@@ -39,7 +39,8 @@ main {
 }
 
 .playing {
-    transform: translateX(-16vw);
+    width: 65vw;
+    transform: translateX(-5vw);
 }
 
 #play-area {
@@ -98,4 +99,8 @@ main {
 .ask-order {
     align-self: center;
     font-size: 2.3em;
+}
+
+.play-info {
+    width: 25vw;
 }

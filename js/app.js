@@ -67,7 +67,9 @@ const app = {
         if (mainClass === 'voting') {
             this.showChoices(['player-vote', this.players[0].name, 'IDC', this.players[1].name]);
         } else {
+            this.mainArea.classList.remove('voting');
             this.showChoices(this.activities);
+            this.infoArea.classList.add('play-info');
         }
     },
     startConnectGame() {
@@ -99,12 +101,6 @@ const app = {
             }
         }
     },
-    showVotes() {
-        // lolololol this is gonna take a while
-        
-        // triggers the width transition on main
-        this.mainArea.classList.add('choosing');
-    },
     takeVote(playerName) {
         console.log('vote for', playerName);
         this.orderVotes.push(playerName);
@@ -131,6 +127,8 @@ const app = {
                 this.players = [this.players[1],this.players[0]]
             }
         }
+        this.updatePlayerInfo(this.players[0],1);
+        this.updatePlayerInfo(this.players[1],2);
         this.transitionScreenTo('playing');
     },
     setPlayOrder(playerName) {
