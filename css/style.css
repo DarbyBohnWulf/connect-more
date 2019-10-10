@@ -18,8 +18,11 @@ main {
     transition: width 1s ease-out .5s, transform 1s ease-out .5s;
 }
 
-.playing {
+.choosing {
     width: 65vw;
+}
+
+.playing {
     transform: translateX(-16vw);
 }
 
@@ -74,4 +77,9 @@ main {
     z-index: 2;
     top: 30%;
     font-size: 2.6em;
+}
+
+.ask-order {
+    align-self: center;
+    font-size: 2.3em;
 }

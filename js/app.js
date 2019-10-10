@@ -20,7 +20,7 @@ const app = {
     nameSpace: document.querySelector('#player-names'),
     mainArea: document.querySelector('main'),
     board: undefined,
-    choices: [
+    activities: [
         'Connection Game', 'Self Destruct(!)'
     ],
     game: undefined,
@@ -48,32 +48,37 @@ const app = {
     // sets DOM up for an activity
     transitionToChoosing() {
         this.nameForm.remove();
-        // triggers the transitions on main
-        this.mainArea.classList.add('playing');
         // window.setTimeout(this.createCanvas.bind(app), 3000);
-        this.showChoices();
+        this.showChoices(this.activities);
     },
     startConnectGame() {
-        this.clearPlayArea();
+        this.clearArea(this.playArea);
         this.game = new ConnectionGame(this.players[0],this.players[1]);
         this.board = this.game.createGameBoard(this.playArea.scrollWidth);
         this.playArea.appendChild(this.board);
         this.game.populateBoard();
     },
-    showChoices() {
-        for (let i = 0; i < this.choices.length; i++) {
+    showChoices(choices) {
+        for (let i = 0; i < choices.length; i++) {
             const option = document.createElement('button');
-            option.textContent = this.choices[i];
+            option.textContent = this.activities[i];
             option.classList.add('game-choice');
-            option.setAttribute('id',this.choices[i].split(' ').join('-').toLowerCase());
+            option.setAttribute('id',this.activities[i].split(' ').join('-').toLowerCase());
             this.playArea.appendChild(option);
         }
     },
-    clearPlayArea() {
-        while (this.playArea.lastChild) {
-            this.playArea.removeChild(this.playArea.lastChild);
+    clearArea(htmlArea) {
+        while (htmlArea.lastChild) {
+            htmlArea.removeChild(htmlArea.lastChild);
         }
-    }
+    },
+    takeVotes() {
+        // lolololol this is gonna take a while
+        this.clearArea(this.playArea);
+        this.showChoices([this.players[0].name,this.players[1].name]);
+        // triggers the width transition on main
+        this.mainArea.classList.add('choosing');
+    },
 }
 
 app.nameForm.addEventListener('submit', e => {
