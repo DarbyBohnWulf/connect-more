@@ -26,6 +26,7 @@ const app = {
     p2Name: document.querySelector('#p2-name'),
     p2Wins: document.querySelector('#p2-wins'),
     p2Losses: document.querySelector('#p2-losses'),
+    question: document.createElement('h3'),
     board: undefined,
     activities: [
         'game-choice', 'Connection Game', 'Self Destruct(!)'
@@ -65,14 +66,18 @@ const app = {
         this.clearArea(this.playArea);
         this.mainArea.classList.add(mainClass);
         if (mainClass === 'voting') {
+            this.question.textContent = 'Who should go first? Both of you vote!';
+            this.playArea.before(this.question);
             this.showChoices(['player-vote', this.players[0].name, 'IDC', this.players[1].name]);
         } else {
+            this.question.textContent = 'What would you like to play?';
             this.mainArea.classList.remove('voting');
             this.showChoices(this.activities);
             this.infoArea.classList.add('play-info');
         }
     },
     startConnectGame() {
+        this.question.remove()
         this.clearArea(this.playArea);
         this.game = new ConnectionGame(this.players[0],this.players[1]);
         this.board = this.game.createGameBoard(this.playArea.scrollWidth);
