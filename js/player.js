@@ -15,5 +15,7 @@ along with Connect More.  If not, see <https://www.gnu.org/licenses/>. */
 class Player {
     constructor(name) {
         this.name = name;
+        this.wins = 0;
+        this.losses = 0;
     }
 }

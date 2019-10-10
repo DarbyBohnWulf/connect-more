@@ -19,6 +19,13 @@ const app = {
     playArea: document.querySelector('#play-area'),
     nameSpace: document.querySelector('#player-names'),
     mainArea: document.querySelector('main'),
+    infoArea: document.querySelector('#info'),
+    p1Name: document.querySelector('#p1-name'),
+    p1Wins: document.querySelector('#p1-wins'),
+    p1Losses: document.querySelector('#p1-losses'),
+    p2Name: document.querySelector('#p2-name'),
+    p2Wins: document.querySelector('#p2-wins'),
+    p2Losses: document.querySelector('#p2-losses'),
     board: undefined,
     activities: [
         'game-choice', 'Connection Game', 'Self Destruct(!)'
@@ -37,14 +44,21 @@ const app = {
             this.nameInput.value = '';
             this.nameInput.setAttribute('placeholder', 'Player 2?');
         }
-        this.showPlayerName(newPlayer);
+        this.updatePlayerInfo(newPlayer,this.players.length);
     },
     // adds player names to the DOM
-    showPlayerName(player) {
-        const nameHeader = document.createElement('h4');
-        nameHeader.className = 'player-name';
-        nameHeader.textContent = player.name;
-        this.nameSpace.append(nameHeader);
+    updatePlayerInfo(player,number) {
+        if (number === 1) {
+            console.log('adding player 1 info...');
+            this.p1Name.textContent = player.name;
+            this.p1Wins.textContent = player.wins;
+            this.p1Losses.textContent = player.losses;
+        } else {
+            console.log('adding player 2 info...');
+            this.p2Name.textContent = player.name;
+            this.p2Wins.textContent = player.wins;
+            this.p2Losses.textContent = player.losses;
+        }
     },
     // sets DOM up for an activity
     transitionScreenTo(mainClass) {

@@ -18,6 +18,22 @@ main {
     transition: width 1s ease-out .5s, transform 1s ease-out .5s;
 }
 
+#info {
+    display: flex;
+    background-color: gainsboro;
+    width: 20vw;
+}
+
+#info header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+#info table {
+    margin: 0 auto;
+}
+
 .choosing, .voting {
     width: 65vw;
 }
