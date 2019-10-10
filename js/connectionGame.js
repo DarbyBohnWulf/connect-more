@@ -20,17 +20,15 @@ class ConnectionGame {
         this.turn = 1;
         this.boardMatrix = [];
         this.lastMove = { x: 0, y: 0, u: 0, d: 0 };
+        // this has to be the same ref later so it can be removed
+        this.moveHandler = this.letPlay.bind(this);
     }
     createGameBoard(playAreaWidth) {
         this.board = document.createElement('section');
         this.board.setAttribute('id','connect-game');
         this.board.setAttribute('width',playAreaWidth)
         this.board.setAttribute('height', playAreaWidth);
-        this.board.addEventListener('click', e => {
-            if (e.target.tagName === 'DIV') {
-                this.makeMove(e.target);
-            }
-        });
+        this.board.addEventListener('click', this.moveHandler);
         // this.populateBoard();
         return this.board
     }
@@ -168,9 +166,15 @@ class ConnectionGame {
         winBanner.style.color = winnerColor;
         [this.player2,this.player1][this.turn % 2].wins++;
         [this.player1,this.player2][this.turn % 2].losses++;
+        this.board.removeEventListener('click', this.moveHandler)
         app.updatePlayerInfo(this.player1,1);
         app.updatePlayerInfo(this.player2,2);
         winBanner.textContent = (`${[this.player2,this.player1][this.turn % 2].name} wins!`);
         winBanner.classList.add('won');
+    }
+    letPlay(event) {
+        if (event.target.tagName === 'DIV') {
+            this.makeMove(event.target);
+        }
     }
 }
