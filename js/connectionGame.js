@@ -122,9 +122,9 @@ class ConnectionGame {
     checkColumn(colNum) {
         let chainLength = 0;
         for (let i = 0; i < 5; i++) {
+            // see checkRow ^^^ for more details on vvv
             if (this.checkColorMatch(this.boardMatrix[colNum][i],this.boardMatrix[colNum][i+1])) {
                 chainLength++;
-                // as we're checking if the next item matches, we only have to get up to 3 links
                 if (chainLength === 3) return true
             } else {
                 if (i > 1) return false
@@ -135,6 +135,7 @@ class ConnectionGame {
     checkUpRightDiagonal() {
         const lane = document.querySelectorAll(`.diagU${this.lastMove.u}`);
         let chainLength = 0;
+        // can't connect 4 if there aren't 4 spots
         if (lane.length < 4) return false
         for (let i = 0; i < lane.length - 1; i++) {
             if (this.checkColorMatch(lane[i],lane[i+1])) {
@@ -149,6 +150,7 @@ class ConnectionGame {
     checkDownRightDiagonal() {
         const lane = document.querySelectorAll(`.${this.lastMove.d}`);
         let chainLength = 0;
+        // see other checks if you're confused
         if (lane.length < 4) return false
         for (let i = 0; i < lane.length - 1; i++) {
             if (this.checkColorMatch(lane[i],lane[i+1])) {
@@ -164,6 +166,10 @@ class ConnectionGame {
         const winBanner = document.querySelector('.win-banner');
         const winnerColor = app.game.turn % 2 ? '#f33f' : '#3f3f';
         winBanner.style.color = winnerColor;
+        [this.player2,this.player1][this.turn % 2].wins++;
+        [this.player1,this.player2][this.turn % 2].losses++;
+        app.updatePlayerInfo(this.player1,1);
+        app.updatePlayerInfo(this.player2,2);
         winBanner.textContent = (`${[this.player2,this.player1][this.turn % 2].name} wins!`);
         winBanner.classList.add('won');
     }
