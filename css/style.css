@@ -81,7 +81,7 @@ main {
 
 .win-banner {
     /* font-size: 2em; */
-    text-shadow: #434ab3;
+    background-color: darkblue;
     position: absolute;
     opacity: 0;
     top: 120%;
