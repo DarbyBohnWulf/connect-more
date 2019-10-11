@@ -58,7 +58,6 @@ class ConnectionGame {
     }
     makeMove(div) {
         if (div.style.backgroundColor !== 'rgb(179, 160, 36)') {
-            console.log('Hey, quit it!');
         //only makeMove and increment turn if the move is in a free space
         } else {
             if (app.game.turn % 2 !== 0) {

@@ -35,7 +35,6 @@ const app = {
     game: undefined,
     setPlayerName() {
         const newPlayer = new Player(app.nameInput.value);
-        console.log(newPlayer);
         this.players.push(newPlayer);
         // if 2 players have been named
         if (this.players.length === 2) {
@@ -50,12 +49,10 @@ const app = {
     // adds player names to the DOM
     updatePlayerInfo(player,number) {
         if (number === 1) {
-            console.log('adding player 1 info...');
             this.p1Name.textContent = player.name;
             this.p1Wins.textContent = player.wins;
             this.p1Losses.textContent = player.losses;
         } else {
-            console.log('adding player 2 info...');
             this.p2Name.textContent = player.name;
             this.p2Wins.textContent = player.wins;
             this.p2Losses.textContent = player.losses;
@@ -107,7 +104,6 @@ const app = {
         }
     },
     takeVote(playerName) {
-        console.log('vote for', playerName);
         this.orderVotes.push(playerName);
         if (this.orderVotes.length < 2) {
         } else {
@@ -117,16 +113,12 @@ const app = {
     },
     tallyVotes() {
         if (this.orderVotes[0] === this.orderVotes[1] && this.orderVotes[0] !== 'idc') {
-            console.log(this.orderVotes[0],'wins');
             this.setPlayOrder(this.orderVotes[0]);
         } else if (this.orderVotes[0] === 'idc') {
-            console.log(this.orderVotes[1],'wins');
             this.setPlayOrder(this.orderVotes[1]);
         } else if (this.orderVotes[1] === 'idc') {
-            console.log(this.orderVotes[0],'wins');
             this.setPlayOrder(this.orderVotes[0]);
         } else {
-            console.log('You don\'t care? I will choose your order.');
             // 50/50 chance that the order will change,
             if (Math.floor(Math.random() * 2) > 0) {
                 this.players = [this.players[1],this.players[0]]
@@ -138,9 +130,7 @@ const app = {
     },
     setPlayOrder(playerName) {
         // only change order if the vote lands on player 2
-        console.log('setting order');
         if (this.players[1].name.toLowerCase() === playerName) {
-            console.log('second player chosen');
             this.players.unshift(this.players.splice(1)[0]);
         }
     },
